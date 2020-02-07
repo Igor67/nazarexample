@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!--<script src="NotoSansCJKjp-Regular-normal.js"></script>-->
+<script src='jsPDF-master/dist/jspdf.min.js' ></script>
+<script src="NotoSansCJKjp-Regular-normal.js"></script>
+<script src="https://unpkg.com/jspdf-autotable" ></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.62/pdfmake.min.js"></script>-->
+
+
+<script src="" ></script>
+<script src="data-index-penya.js"></script>
+<div>
+    <h4>Інформація про зобов'язання</h4>
+    <p class="margin-top-15">Вкажіть зобов'язання у довільній формі.<br>
+        <i>Наприклад: <b>Договір поставки № 00001 від 15.01.2016 року</b><br>
+            Не обов'язково</i></p>
+    <script src="main.js"></script>
+    <input class="input-full main-input" id="info" type="text" name="nDebt" value="" data-toggle="tooltip"
+           data-placement="top" title="" placeholder="Про зобов'язання"
+           data-original-title="Інформація про зобов'язання">
+    <h4>Інформація про сторони зобов'язання</h4>
+    <p class="margin-top-15">Вкажіть зобов'язання у довільній формі.<br>
+        <i>Наприклад: <b>Договір поставки № 00001 від 15.01.2016 року</b><br>
+            Не обов'язково</i></p>
+    <input class="input-full main-input" id="info2" type="text" name="nDebt" value="" data-toggle="tooltip"
+           data-placement="top" title="" placeholder="Про зобов'язання"
+           data-original-title="Інформація про зобов'язання">
+    <h4>Дані про взаємні розрахунки за зобов'язанням</h4>
+    <p><i>обов'язково</i></p>
+    <ul class="nav nav-tabs adv-search-tabs" role="tablist">
+        <li role="presentation" class="active" data-toggle="tooltip" data-placement="top" title=""
+            id="tab-calculation-data" data-original-title="Введення даних про взаємні розрахунки"><a
+                href="#calculation-data" aria-controls="calculation-data" role="tab" data-toggle="tab"><span
+                class="hidden-xs hidden-sm">Введення даних</span><span
+                class="hidden-md hidden-lg hidden-xl">Введення</span></a></li>
+        <li role="presentation" data-toggle="tooltip" data-placement="top" title="" id="tab-calculation-data-tab"
+            data-original-title="Перегляд вихідних даних у формі таблиці"><a href="#calculation-data-tab"
+                                                                             aria-controls="calculation-data-tab"
+                                                                             role="tab" data-toggle="tab"><span
+                class="hidden-xs hidden-sm">Таблиця даних</span><span
+                class="hidden-md hidden-lg hidden-xl">Таблиця</span></a></li>
+    </ul>
+    <div class="row tab-content" style="padding:30px 0">
+        <div role="tabpanel" class="tab-param col-xs-12 adv-search-outer tab-pane fade in active" id="calculation-data">
+            <div class="param">
+                <div class="row">
+                    Область введення даних про взаємні розрахунки <a href="#" class="help-adv-param"
+                                                                     data-toggle="tooltip" data-placement="top" title=""
+                                                                     data-original-title="Довідкова інформація"><i
+                        class="fa fa-question-circle"></i></a>
+                    <textarea class="margin-top-15 input-full main-input input-border resizable required"
+                              id="calculation-data-area" name="debt" rows="5" data-toggle="tooltip" data-placement="top"
+                              data-html="true" title="" placeholder="Область даних про взаємні розрахунки"
+                              data-original-title="Документ<b>;</b>Дата<b>;</b>До&nbsp;cплати<b>;</b>Сплата"></textarea>
+                </div>
+                <div class="row" id="row">
+                    <input class="main-input input-border col-lg-3" id="col-doc0" type="text" placeholder="Документ"
+                           data-toggle="tooltip" data-placement="top" data-html="true" title=""
+                           data-original-title="Назва та реквізити первинного документу у довільній формі">
+                    <input class="main-input input-border col-lg-3" id="col-date0" type="text" value="01.01.2019"
+                           placeholder="Дата (ДД.ММ.РРРР)" data-toggle="tooltip" data-placement="top" data-html="true"
+                           title=""
+                           data-original-title="Дата <b>початку прострочення</b>, або дата фатичної оплати. В форматі: <b>ДД.ММ.РРРР</b>.<br><p class='text-warning'><b>УВАГА!!!</b> Дата початку прострочення не завжди співпадає з датою документа</p>">
+                    <input class="main-input input-border col-lg-3" id="col-kt0" value="1200" type="text"
+                           placeholder="До cплати (грн.)" data-toggle="tooltip" data-placement="top" data-html="true"
+                           title="" data-original-title="Сума збільшення зобов'язання">
+                    <input class="main-input input-border col-lg-3" id="col-dt0" value="0" type="number" placeholder="Сплата (грн.)"
+                           data-toggle="tooltip" data-placement="top" data-html="true" title=""
+                           data-original-title="Сума зменшення зобов'язання">
+                </div>
+                <div class="row margin-top-15">
+                    <div>
+                        <button onclick="addInput()">Додати рядок</button>
+                    </div>
+                </div>
+            </div>
+            <div class="margin-top-15">Вихідні дані про взаємні розрахунки можна ввести одним із зручних способів:
+                <ol>
+                    <li>додати дані по рядках, заповнивши відповідні поля, і натиснути кнопку ДОДАТИ РЯДОК (дані будуть
+                        додані до області даних);
+                    </li>
+                    <li>ввести дані безпосередньо до області даних, використовуючи як роздільник стовпчиків ";", як
+                        роздільник рядків - перенесення рядка;
+                    </li>
+                    <li>скопіювати дані у вигляді таблиці (наприклад із документа Exel або Word) і вставити до області
+                        даних (рекомендується для великої кількості рядків вхідних даних).
+                    </li>
+                </ol>
+                <p class="text-warning"><b>УВАГА!!!</b> Дата початку прострочення не завжди співпадає з датою документа.
+                    Детальніше дивіться в <a href="faq.php#faq_01" target="_blank">довідці</a>.</p>
+                <p style="font-size: 80%;">Довідкова інформація: <a href="#" target="_blank">Введення даних. Виконання
+                    розрахунку</a>.</p>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-param col-xs-12 adv-search-outer tab-pane fade" id="calculation-data-tab">
+            <div class="param loader-bg1">
+                <div id="calculation-data-table" class="hidden table-responsive"></div>
+                <div id="calculation-data-null" class="hidden">Таблиця не містить вихідних даних у належному форматі.
+                    Будь-ласка перевірте правильність вводу даних.
+                </div>
+            </div>
+        </div>
+    </div>
+    <h4 class="margin-top-30" style="display: block;">Дата подачі позовної заяви</h4>
+    <p class="margin-top-15" style="display: block;">Вкажіть дату подачі позовної заяви до суду. Ця дата враховується
+        при розрахунку періоду позовної давності.<br>
+        <i>Формат: <b>ДД.ММ.РРРР</b><br>
+            Наприклад: <b>01.10.2016</b></i></p>
+    <p style="display: block;"><i>Обов'язково</i></p>
+    <input class="main-input required" id="startDate" type="text" name="dateAction" value="01.01.2019"
+           data-toggle="tooltip" data-placement="top" data-html="true" title="" placeholder="Дата подачі позову"
+           data-original-title="Дата подачі позову<br />(<i><b>дд.мм.рррр</b></i>)">
+    <span class="input-group-addon" id="input-addon1">року</span>
+    <h4 class="margin-top-30" style="display: block;">Кінцева дата нарахування збитків / санкцій</h4>
+    <p class="margin-top-15" style="display: block;">Вкажіть дату, на яку необхідно розрахувати збитки / санкції.<br>
+        <i>Формат: <b>ДД.ММ.РРРР</b><br>
+            Наприклад: <b>15.10.2016</b></i></p>
+    <p style="display: block;"><i>Обов'язково</i></p>
+    <div class="param input-group input-border input-short">
+        <input class="main-input required" id="finishDate" type="text" name="dateCalc" value="11.01.2019"
+               data-toggle="tooltip" data-placement="top" data-html="true" title="" placeholder="Дата розрахунку"
+               data-original-title="Дата розрахунку<br />(<i><b>дд.мм.рррр</b></i>)">
+        <span class="input-group-addon" id="input-addon2">року</span>
+    </div>
+    <h4 class="margin-top-30" style="display: block;">Строк позовної давності за основним зобов'язанням</h4>
+    <p class="margin-top-15" style="display: block;">Загальний строк позовної давності 3 роки, відповідно до ч. 1 ст.
+        257 ЦК України. Позовна давність, встановлена законом, може бути збільшена за домовленістю сторін. Договір про
+        збільшення позовної давності укладається у письмовій формі (ч. 1 ст. 259 ЦК України).<br>
+        Позовна давність вимірюється роками. Якщо позовна давність не застосовується, <a id="cleanLimitPeriod" href="#">залиште
+            це поле пустим</a>.<br>
+        <i>Формат: ціле цифрове значення<br>
+            Наприклад: <b>3</b></i></p>
+    <div class="input-group input-border input-short" style="display: table;">
+        <input class="main-input" id="term" type="text" name="limitPeriod" value="3" data-toggle="tooltip"
+               data-placement="top" data-html="true" title="" placeholder="Строк позовної давності"
+               data-original-title="Строк позовної давності (<i>роки</i>)">
+        <span class="input-group-addon" id="input-addon3">роки</span>
+    </div>
+    <h4 class="margin-top-30" style="display: block;">Рознахунок збитків від інфляції</h4>
+    <p class="note" style="display: block;">Відповідно до статті&nbsp;625 Цивільного кодексу України боржник, який
+        прострочив виконання грошового зобов'язання, на вимогу кредитора зобов'язаний сплатити суму боргу з урахуванням
+        встановленого індексу інфляції за весь час прострочення. <br> <br> Відповідні індекси розраховуються Державним
+        комітетом статистики України (раніше - Міністерство статистики України), починаючи з серпня 1991 року щомісяця і
+        публікуються, зокрема, в газеті "Урядовий кур'єр". Опубліковані друкованими засобами масової інформації з
+        посиланням на Державний комітет статистики України ці показники відповідно до статей&nbsp;19, 21 і 22 Закону
+        України "Про інформацію" є офіційними.</p>
+
+    <div class="row tab-content" style="padding:30px 0">
+        <div role="tabpanel" class="tab-param col-xs-12 adv-search-outer tab-pane fade active in" id="inflation1">
+            <div class="param">
+                <p><b>З</b> урахуванням дефляції (враховується індекс інфляції менше 100%).</p>
+            </div>
+            <p style="display: block;">При розрахунку збитків від інфляції враховується дефляція.</p>
+            <p style="display: block;">Якщо індекс інфляції за розрахунковий місяць склав 99%, то сума боргу
+                зменшується. Наприклад: 1 000,00 грн. * 99% = 990,00 грн.</p>
+            <p style="display: block;"><b>Аргументація</b>: Рекомендації Верховного суду України № 62-97 від 03.04.1997
+                року, щодо порядку застосування індексів інфляції при розгляді судових справ, наказують визначення
+                індексу за будь-який період шляхом перемноження помісячних індексів між собою. При цьому враховуються і
+                інфляція, і дефляція.</p>
+            <input type="hidden" name="noDeflation" value="0" style="display: inline-block;">
+        </div>
+        <div role="tabpanel" class="tab-param col-xs-12 adv-search-outer tab-pane fade" id="inflation2">
+            <div class="param">
+                <p><b>БЕЗ</b> урахування дефляції (не враховується індекс інфляції менше 100%).</p>
+            </div>
+            <p style="display: block;">При розрахунку збитків від інфляції НЕ враховується дефляція, місяці у яких
+                індекс інфляції був менше 100% до уваги не беруться.</p>
+            <p style="display: block;"><b>Аргументація</b>: Інфляція не має негативний індекс - це дефляція. <br>
+                Стаття&nbsp;625 Цивільного кодексу України встановлює компенсацію втрат кредитора від прострочення
+                боржника, а саме, компенсацію зменшення купівельної спроможності грошей, на які можна було б купити
+                більше товару, якби боржник розрахувався вчасно. Дотримуючись тлумаченню ст.&nbsp;625 Цивільного кодексу
+                України, застосуванню підлягають саме індекси інфляції у місяці, коли вона була.</p>
+            <input type="hidden" name="noDeflation" value="1" style="display: inline-block;">
+        </div>
+    </div>
+    <h4 class="margin-top-30" style="display: block;">Розрахунок відсотків за використання коштів</h4>
+    <label for="percent"><span></span>Розрахувати суму відсотків за використання коштів <a href="#"
+                                                                                           class="help-adv-param"
+                                                                                           data-toggle="tooltip"
+                                                                                           data-placement="top" title=""
+                                                                                           data-original-title="Довідкова інформація"><i
+            class="fa fa-question-circle"></i></a></label>
+    <p>Відповідно до статті&nbsp;625 Цивільного кодексу України боржник, який прострочив виконання грошового
+        зобов'язання, на вимогу кредитора зобов'язаний сплатити три проценти річних від простроченої суми, якщо інший
+        розмір процентів не встановлений договором або законом.<br>
+        <i>Формат: проценти - числове значення; </i></p>
+    <div class="param">
+        <div class="input-group input-border input-short">
+            <input class="main-input" id="percent" type="text" name="ratePercent" value="3" data-toggle="tooltip"
+                   data-placement="top" data-html="true" title="" placeholder="Процент"
+                   data-original-title="Розмір процентної ставки<br />(<i>%</i>)">
+            <span class="input-group-addon" id="input-addon4">&nbsp;%&nbsp;</span>
+        </div>
+
+    </div>
+
+    <h4 class="margin-top-30">Розрахунок пені за несвоєчасне виконання зобов'язань</h4>
+    <label for="penalty"><span></span>Розрахувати суму пені за несвоєчасне виконання зобов'язань <a href="#"
+                                                                                                    class="help-adv-param"
+                                                                                                    data-toggle="tooltip"
+                                                                                                    data-placement="top"
+                                                                                                    title=""
+                                                                                                    data-original-title="Довідкова інформація"><i
+            class="fa fa-question-circle"></i></a></label>
+    <div class="content-note param">
+        <h4 class="margin-top-15">Строк спеціальної позовної давності</h4>
+        <p class="margin-top-15">Спеціальна позовна давність в один рік застосовується, зокрема, до вимог про стягнення
+            неустойки (штрафу, пені) (п. 1 ч. 2 ст. 258 ЦК України).<br>
+            Позовна давність, встановлена законом, може бути збільшена за домовленістю сторін (ч. 1 ст. 259 ЦК України).
+        </p>
+        <p>Якщо цей строк не обмежений, <a id="cleanLimitPeriodPenalty" href="#">залиште поле пустим</a>.</p>
+        <div class="input-group input-border input-short">
+            <input class="main-input" id="deadline" type="text" name="limitPeriodPenalty" value="1"
+                   data-toggle="tooltip" data-placement="top" data-html="true" title=""
+                   placeholder="Спеціальна давність"
+                   data-original-title="Строк спеціальної позовної давності<br />(<i>роки</i>)">
+            <span class="input-group-addon" id="input-addon7">рік</span>
+        </div>
+        <h4 class="margin-top-15">Строк, через який припиняється нарахування пені</h4>
+        <p class="margin-top-15">Нарахування штрафних санкцій за прострочення виконання зобов'язання, якщо інше не
+            встановлено законом або договором, припиняється через шість місяців від дня, коли зобов'язання мало бути
+            виконано (ч. 6 ст. 232 ГК України).</p>
+        <p>Якщо цей строк не обмежений, <a id="cleanLimitPeriodPenalty232" href="#">залиште поле пустим</a>.</p>
+        <div class="input-group input-border input-short">
+            <input class="main-input" type="text" id="deadline-stop" name="limitPeriodPenalty232" value="6"
+                   data-toggle="tooltip" data-placement="top" data-html="true" title="" placeholder="Строк розрахунку"
+                   data-original-title="Строк, через який припиняється нарахування пені<br />(<i>місяці</i>)">
+            <span class="input-group-addon" id="input-addon8">місяців</span>
+        </div>
+        <p>напишіть відсоток для рахунку пені або залиште 0 якщо рахувати по обліковій ставці нбу.</p>
+        <input type="number" value="0" id="penya-count">
+        <p>исковая давность для инфляции и годовых</p>
+        <input id="infl-term" value="1" type="number" value = 3>
+<!--        <p>дефляция</p>-->
+<!--        <input type="radio" name="browser" id="def-yes"> да<Br>-->
+<!--        <input type="radio" name="browser" value="no" id="def-no"> нет<Br>-->
+
+    </div>
+    <h4 class="margin-top-30">Контактна інформація</h4>
+    <p class="margin-top-15">Вкажіть свою поштову скриньку для ідентифікації розрахунку. Для отримання історії
+        розрахунків надійшліть запит на <a class="email" href="mailto:igorzab22@gmail.com">igorzab22@gmail.com</a>.</p>
+
+    <button class="button-primary disable-button button-triangle button-triangle2 button-icon" onclick="calculate()">
+        Розрахувати
+    </button>
+    <button class="button-primary disable-button button-triangle button-triangle2 button-icon" onclick="clearTable()">
+        Очистить
+    </button>
+</div>
+<h3 id="answer">  </h3>
+<script type="text/javascript">
+
+</script>
+<div id="table-div">
+
+</div>
+</body>
+</html>
